@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}ASMA Product{% endblock %}
+
+{% block body %}
+<section class="container py-5">
+  <div class="row align-items-center g-5">
+    <!-- Product Image -->
+    <div class="col-md-6 text-center">
+      <div class="shadow-lg rounded-4 overflow-hidden" style="background: #ffffff; padding: 20px;">
+        <img src="{{ product.image.url }}" class="img-fluid rounded-4" 
+             alt="ASMA Product" style="animation: zoomIn 1s ease;">
+      </div>
+    </div>
+
+    <!-- Product Info -->
+    <div class="col-md-6">
+      <h2 class="mb-3" style="color:#ff8c00; font-weight:700;">ASMA Special</h2>
+      {% if product.description %}
+      <p class="fs-5 text-muted mb-4" style="animation: fadeInUp 1s;">{{ product.description }}</p>
+      {% else %}
+      <p class="fs-5 text-muted mb-4" style="animation: fadeInUp 1s;">Delicious treat handcrafted just for you!</p>
+      {% endif %}
+
+      <!-- Extra Info Section -->
+      <div class="mb-4">
+        <h5 style="color:#ff8c00;">Why you'll love it:</h5>
+        <ul class="list-unstyled text-muted">
+          <li>🍰 Freshly baked and made with love</li>
+          <li>🎉 Perfect for birthdays, weddings, and special occasions</li>
+          <li>🌿 Hand-selected ingredients for best taste</li>
+          <li>📦 Delivered straight to your door</li>
+        </ul>
+      </div>
+
+      <!-- Order & Back Buttons -->
+      <div class="d-flex flex-wrap gap-3">
+        <a href="https://www.facebook.com/profile.php?id=61571014872902     " class="btn btn-lg" 
+           style="animation: bounceIn 1.2s; background:#1877f2; color:#fff; border:none;">
+          Order on Facebook
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Related Products -->
+  {% if related %}
+  <h4 class="mt-5 mb-3" style="color:#ff8c00;">You might also like</h4>
+  <div class="row g-3">
+    {% for r in related %}
+    <div class="col-6 col-md-3">
+      <a href="{% url 'product_detail' r.id %}" class="d-block shadow-sm rounded-3 overflow-hidden hover-lift" style="background:#ffffff; padding:5px;">
+        <img src="{{ r.image.url }}" class="img-fluid rounded" style="animation: fadeInUp 1s;" alt="Related Product">
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- Fun Fact / Placeholder Section -->
+  <div class="mt-5 p-4 rounded-4" style="background:#fff8f3;">
+    <h5 style="color:#ff8c00;">Fun Fact:</h5>
+    <p class="text-muted">Did you know? Our recipes are inspired by both traditional and modern flavors, ensuring every bite is a delightful surprise! Perfect for family and friends.</p>
+  </div>
+</section>
+
+<!-- Animations -->
+<style>
+@keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity:1; } }
+@keyframes fadeInUp { from { transform: translateY(20px); opacity:0; } to { transform: translateY(0); opacity:1; } }
+@keyframes bounceIn { 0% { transform: scale(0.3); opacity:0; } 50% { transform: scale(1.05); opacity:1; } 70% { transform: scale(0.9); } 100% { transform: scale(1); } }
+
+.hover-lift:hover { transform: translateY(-5px); transition: all 0.3s ease; }
+</style>
+{% endblock %}

@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% block body %}
+{% load static %}
+
+<!-- ===== HERO SECTION ===== -->
+<section id="home" class="hero container animate-down">
+    <div class="row align-items-center g-4">
+        <div class="col-lg-6 animate-left">
+            <h1>
+                DISHES & TREATS PRESENTED with 
+                <span class="highlight">Delight</span>
+            </h1>
+            <p class="lead text-muted">
+                Custom flavours, party orders, and daily fresh dishes. 
+                Handcrafted perfection delivered to your doorstep.
+            </p>
+            
+            <div class="mt-4">
+                <a href="#gallery" class="btn-view-gallery animate-float">
+                    🍰 View Our Gallery
+                </a>
+            </div>
+            
+            <ul class="list-unstyled mt-4 text-secondary">
+                <li class="mb-2 animate-up">✨ Freshly baked every morning</li>
+                <li class="mb-2 animate-up" style="animation-delay: 0.2s;">🎂 Custom birthday & wedding cakes</li>
+                <li class="animate-up" style="animation-delay: 0.4s;">📦 Party boxes & special flavours</li>
+            </ul>
+        </div>
+        
+        <div class="col-lg-6 text-center animate-right">
+            <div class="hero-image animate-zoom">
+                <img src="{% static 'images/asma9.jpg' %}" alt="Delicious ASMA Dishes" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FEATURES SECTION ===== -->
+<section class="features container">
+    <div class="row g-4">
+        <div class="col-md-4 animate-up">
+            <div class="feature-card">
+                <div class="feature-icon">🍩</div>
+                <h5>Daily Fresh Cupcakes</h5>
+                <p class="text-muted">
+                    Variety of glazes, sprinkles, fillings & classic favourites 
+                    baked fresh every single day.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-4 animate-up" style="animation-delay: 0.2s;">
+            <div class="feature-card">
+                <div class="feature-icon">🍜</div>
+                <h5>Custom Dishes</h5>
+                <p class="text-muted">
+                    Birthdays, weddings, anniversaries — handcrafted and 
+                    personalized just for your special occasion.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-4 animate-up" style="animation-delay: 0.4s;">
+            <div class="feature-card">
+                <div class="feature-icon">🎊</div>
+                <h5>Party Catering</h5>
+                <p class="text-muted">
+                    Office boxes, party packs, and event catering with 
+                    delivery right to your venue.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== SWIPER GALLERY (Featured Creations) ===== -->
+<section id="gallery" class="gallery-section">
+    <div class="container">
+        <div class="section-title animate-down">
+            <h2>Featured Creations</h2>
+            <p>Swipe to explore our signature dishes</p>
+        </div>
+
+        {% if gallery_images %}
+        <div class="swiper featuredSwiper">
+            <div class="swiper-wrapper">
+                {% for product in gallery_images|slice:":5" %}
+                <div class="swiper-slide">
+                    <a href="{% url 'product_detail' product.id %}">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" />
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+        {% else %}
+        <p class="text-muted text-center">No products to display yet.</p>
+        {% endif %}
+    </div>
+</section>
+
+<!-- ===== FULL GALLERY GRID ===== -->
+<section class="full-gallery">
+    <div class="container">
+        <div class="section-title animate-down">
+            <h2>ASMA'S COOKING Gallery</h2>
+            <p>All our delicious creations in one place</p>
+        </div>
+
+        {% if gallery_images %}
+        <div class="row g-3">
+            {% for product in gallery_images %}
+            <div class="col-6 col-md-3">
+                <div class="gallery-item animate-zoom" style="animation-delay: {{ forloop.counter0|floatformat:2 }}s;">
+                    <a href="{% url 'product_detail' product.id %}">
+                        <img src="{{ product.image.url }}" alt="ASMA'S COOKING" />
+                        <div class="gallery-overlay">
+                            <span>ASMA'S COOKING</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-muted text-center">No images uploaded yet.</p>
+        {% endif %}
+    </div>
+</section>
+
+<!-- ===== GALLERY STYLES ===== -->
+<style>
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    height: 250px;
+    background: white;
+}
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+.gallery-overlay {
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.5);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    text-align: center;
+    font-weight: 600;
+    transition: opacity 0.3s ease;
+}
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+}
+.gallery-overlay span {
+    font-size: 1rem;
+}
+/* Responsive */
+@media(max-width:768px){
+    .gallery-item { height:200px; }
+}
+@media(max-width:576px){
+    .gallery-item { height:180px; }
+}
+</style>
+
+{% endblock %}
