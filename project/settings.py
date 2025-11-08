@@ -124,7 +124,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # SECURITY & CORS
-CSRF_TRUSTED_ORIGINS = ['https://asmacooking.onrender.com']
+CSRF_TRUSTED_ORIGINS = ['https://asma-cooking.onrender.com']
 
 
 # Default primary key field type
